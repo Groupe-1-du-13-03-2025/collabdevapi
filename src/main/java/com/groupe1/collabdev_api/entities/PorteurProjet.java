@@ -21,4 +21,5 @@ public class PorteurProjet {
     @OneToOne
     @JoinColumn(name = "id_utilisateur", nullable = false)
     private Utilisateur utilisateur;
+
 }
