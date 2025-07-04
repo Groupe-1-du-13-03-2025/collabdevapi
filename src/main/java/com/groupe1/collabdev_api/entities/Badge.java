@@ -27,4 +27,28 @@ public class Badge {
 
     @OneToMany(mappedBy = "badge")
     private List<ObtentionBadge> obtentionBadges = new ArrayList<>();
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    public String getTitre() {
+        return titre;
+    }
+
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
+
+    public String getUriImage() {
+        return uriImage;
+    }
+
+    public void setUriImage(String uriImage) {
+        this.uriImage = uriImage;
+    }
 }
