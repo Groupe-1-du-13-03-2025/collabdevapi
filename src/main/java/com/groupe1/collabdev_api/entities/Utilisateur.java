@@ -1,5 +1,6 @@
 package com.groupe1.collabdev_api.entities;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import com.groupe1.collabdev_api.entities.enums.Genre;
 import com.groupe1.collabdev_api.entities.enums.Role;
 import jakarta.persistence.*;
@@ -45,9 +46,12 @@ public class Utilisateur {
     @Column(nullable = false)
     private boolean etat = true;
 
+
+    @JsonIgnore
     @OneToMany(mappedBy = "utilisateur")
     private List<CommentaireProjet> commentairesProjet = new ArrayList<>();
 
+    @JsonIgnore
     @OneToMany(mappedBy = "utilisateur")
     private List<CommentaireIdeeProjet> commentairesIdeeProjet = new ArrayList<>();
 

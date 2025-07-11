@@ -49,7 +49,7 @@ public class AdministrateurService {
             existant.setMotDePasse(BCrypt.hashpw(admin.getMotDePasse(), BCrypt.gensalt()));
 
         Administrateur modifie = administrateurRepository.save(existant);
-        return ResponseEntity.ok(modifie);
+        return ResponseEntity.ok(modifie.toResponse());
     }
 
     public Administrateur chercherParId(int id) {

@@ -14,8 +14,9 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequestMapping("/authentification")
-@Tag(name = "Controller pour les administrateurs",
-        description = "Quelque chose")
+@Tag(name = "utilisateur",
+        description = """
+                Ce contrôleur permet aux administrateurs et utilisateurs de s'authentifier""")
 public class AuthentificationController {
 
     @Autowired
@@ -24,10 +25,10 @@ public class AuthentificationController {
     @PostMapping
     public ResponseEntity<?> seConnecter(
             @RequestBody RequestAuthentification user
-            ) {
+    ) {
         try {
             boolean isAuthenticatedUser = authenticationService.authenticate(user);
-            if(isAuthenticatedUser){
+            if (isAuthenticatedUser) {
                 return
                         new ResponseEntity<>(
                                 "Authentification réussie!",
@@ -40,11 +41,17 @@ public class AuthentificationController {
                                 HttpStatus.OK
                         );
             }
-        } catch (UserNotFoundException e){
+        } catch (UserNotFoundException e) {
             return
                     new ResponseEntity<>(
                             e.getMessage(),
                             HttpStatus.NOT_FOUND
+                    );
+        } catch (RuntimeException e) {
+            return
+                    new ResponseEntity<>(
+                            e.getMessage(),
+                            HttpStatus.FORBIDDEN
                     );
         } catch (Exception e) {
             return

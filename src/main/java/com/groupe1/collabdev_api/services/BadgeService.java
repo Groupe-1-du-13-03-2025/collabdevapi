@@ -82,7 +82,9 @@ public class BadgeService {
         File file = new File(chemin);
         file.delete();
         badgeRepository.delete(badge);
-        return ResponseEntity.ok(badgeRepository.findAll());
+        return ResponseEntity.ok(
+                String.format("Le badge %s a été supprimé avec succès!", badge.getTitre())
+        );
     }
 
     //Pour affichage des badges :

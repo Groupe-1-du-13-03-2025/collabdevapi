@@ -32,10 +32,13 @@ public class AuthenticationService {
         }
     }
 
-    private Boolean authenticateUser(String email, String motDePasse, Role role) throws UserNotFoundException {
+    private Boolean authenticateUser(String email, String motDePasse, Role role) throws UserNotFoundException, RuntimeException {
         Utilisateur utilisateur = utilisateurService.chercherParEmail(email);
         if (utilisateur == null) {
             throw new UserNotFoundException(role);
+        }
+        if(!utilisateur.isEtat()){
+            throw new RuntimeException("Votre compte est bloqué, impossible de se connecter!");
         }
         return BCrypt.checkpw(
                 motDePasse,

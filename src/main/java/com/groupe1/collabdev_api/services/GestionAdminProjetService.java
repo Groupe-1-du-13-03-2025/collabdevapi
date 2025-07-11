@@ -7,6 +7,7 @@ import com.groupe1.collabdev_api.entities.enums.TypeGestionProjet;
 import com.groupe1.collabdev_api.repositories.AdministrateurRepository;
 import com.groupe1.collabdev_api.repositories.GestionAdminProjetRepository;
 import com.groupe1.collabdev_api.repositories.ProjetRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -39,8 +40,24 @@ public class GestionAdminProjetService {
         return gestionAdminProjetRepository.save(gestionAdminProjet);
     }
 
-    public Boolean supprimerParId(int id){
+    public Boolean supprimerParId(int id, int idAdmin){
+        Administrateur administrateur = administrateurRepository.findById(idAdmin).orElseThrow(
+                () -> new EntityNotFoundException("Administrateur introuvable!")
+        );
+        Projet projet = projetRepository.findById(id)
+                        .orElseThrow(
+                                ()-> new EntityNotFoundException("Projet introuvable!")
+                        );
         projetRepository.deleteById(id);
+        gestionAdminProjetRepository.save(
+                new GestionAdminProjet(
+                        0,
+                        TypeGestionProjet.SUPPRIMER,
+                        LocalDate.now(),
+                        administrateur,
+                        projet
+                )
+        );
         return true;
     }
 

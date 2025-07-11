@@ -2,6 +2,7 @@ package com.groupe1.collabdev_api.entities;
 
 import com.groupe1.collabdev_api.entities.enums.TypeGestionProjet;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
@@ -12,6 +13,7 @@ import java.time.LocalDate;
 @Getter
 @Setter
 @NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "gestions_admin_projet")
 public class GestionAdminProjet {
 

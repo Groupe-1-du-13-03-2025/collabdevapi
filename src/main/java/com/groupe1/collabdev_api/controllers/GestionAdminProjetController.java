@@ -1,10 +1,12 @@
 package com.groupe1.collabdev_api.controllers;
 
+import com.groupe1.collabdev_api.dto.ProjetDto;
 import com.groupe1.collabdev_api.entities.Projet;
 import com.groupe1.collabdev_api.services.GestionAdminProjetService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 @RestController
@@ -15,25 +17,31 @@ public class GestionAdminProjetController {
 
     //Pour la recuperation des Projets
     @GetMapping
-    public List<Projet> getAllProjets() {
-        return gestionAdminProjetService.afficherListeProjet();
+    public List<ProjetDto> getAllProjets() {
+        List<Projet> projets = gestionAdminProjetService.afficherListeProjet();
+        List<ProjetDto> projetList = new ArrayList<>();
+        for (Projet projet : projets) {
+            projetList.add(projet.toDto());
+        }
+        return projetList;
     }
 
     //Pour activer un Projet :
     @GetMapping("{id}/activer")
-    public Projet actviveProjet(@PathVariable int id, @RequestParam("idAdmin") int idA) {
-        return gestionAdminProjetService.activerProjet(id, idA);
+    public ProjetDto actviveProjet(@PathVariable int id, @RequestParam("idAdmin") int idA) {
+        return gestionAdminProjetService.activerProjet(id, idA).toDto();
     }
 
     //Pour desactiver un Projet :
     @GetMapping("{id}/desactiver")
-    public Projet desactiverProjet(@PathVariable int id, @RequestParam("idAdmin") int idA) {
-        return gestionAdminProjetService.desactiverProjet(id, idA);
+    public ProjetDto desactiverProjet(@PathVariable int id, @RequestParam("idAdmin") int idA) {
+        return gestionAdminProjetService.desactiverProjet(id, idA).toDto();
     }
 
     //Pour supprimer un projet :
     @DeleteMapping("{id}")
-    public void deleteProjet(@PathVariable int id) {
-        gestionAdminProjetService.supprimerParId(id);
+    public boolean deleteProjet(@PathVariable int id,
+                                @RequestParam("idAdmin") int idAdmin) {
+        return gestionAdminProjetService.supprimerParId(id, idAdmin);
     }
 }

@@ -1,5 +1,6 @@
 package com.groupe1.collabdev_api.entities;
 
+import com.groupe1.collabdev_api.dto.response_dto.ResponseCommentaireIdeeProjet;
 import jakarta.persistence.*;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
@@ -31,4 +32,12 @@ public class CommentaireIdeeProjet {
     @ManyToOne
     @JoinColumn(name = "id_idee_projet", nullable = false)
     private IdeeProjet ideeProjet;
+
+    public ResponseCommentaireIdeeProjet toResponse() {
+        return new ResponseCommentaireIdeeProjet(
+                this.id,
+                this.contenu,
+                this.dateCommentaire
+        );
+    }
 }

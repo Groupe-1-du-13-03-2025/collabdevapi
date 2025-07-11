@@ -16,6 +16,7 @@ public class RequestContributeur extends RequestUtilisateur {
     private double pieces;
     private String uriCv;
 
+
     public RequestContributeur(String prenom, String nom, String email, String motDePasse, Genre genre, Niveau niveau, String specialite, Type type, double pieces, String uriCv) {
         super(prenom, nom, email, motDePasse, genre);
         this.niveau = niveau;
